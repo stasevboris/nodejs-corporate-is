@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Корпоративная Информационная Система (10 тем: 5 модулей)</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Enterprise Information System</h1>
+      <small style="color: var(--text-muted);">Дисциплина: «Проектирование и разработка КИС» • Студент: Стасев Б. В. (ИТП-41)</small>
+    </div>
+    <span class="badge" id="appStatusBadge">System: Online</span>
+  </header>
+
+  <nav class="tabs">
+    <button class="active" onclick="switchTab('tab-mod1')">Модуль 1–2: ОС и Автоматизация</button>
+    <button onclick="switchTab('tab-mod2')">Модуль 3–4: Потоки и Шлюз</button>
+    <button onclick="switchTab('tab-mod3')">Модуль 5–6: Express и SQLite</button>
+    <button onclick="switchTab('tab-mod4')">Модуль 7–8: Безопасность и Auth</button>
+    <button onclick="switchTab('tab-mod5')">Модуль 9–10: REST и WebSocket</button>
+  </nav>
+
+  <main>
+    <!-- МОДУЛЬ 1-2 -->
+    <div id="tab-mod1" class="tab-content active">
+      <div class="grid-2">
+        <div class="card">
+          <h2>Характеристики системы (ESM + CommonJS) <button class="btn btn-outline" onclick="loadSystemInfo()">Обновить</button></h2>
+          <pre class="terminal" id="sysInfoOutput">Загрузка данных...</pre>
+        </div>
+        <div class="card">
+          <h2>CLI Process Runner (spawn с контролем времени)</h2>
+          <label>Команда для ОС:</label>
+          <input type="text" id="execCmdInput" value="node -e &quot;console.log('Тест процесса PID:', process.pid)&quot;">
+          <label>Таймаут (мс):</label>
+          <input type="number" id="execTimeoutInput" value="2000">
+          <button class="btn" onclick="runExecCommand()">Выполнить команду</button>
+          <pre class="terminal" id="execOutput" style="margin-top: 1rem;">Результат выполнения...</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- МОДУЛЬ 3-4 -->
+    <div id="tab-mod2" class="tab-content">
+      <div class="card">
+        <h2>Потоковый мониторинг безопасности (EventEmitter + Transform Streams)</h2>
+        <p style="color: var(--text-muted); margin-bottom: 1rem;">Демонстрация конвейера: ParserStream (NDJSON) &rarr; SanitizerStream (маскирование IP/Email/Bearer) &rarr; AuditMonitor (детекция угроз SQLi, XSS, Path Traversal).</p>
+        <button class="btn" onclick="runStreamAudit()">Запустить симуляцию потока логов</button>
+        <div class="grid-2" style="margin-top: 1rem;">
+          <div>
+            <h3>Санитизированные записи (данные скрыты):</h3>
+            <pre class="terminal" id="sanitizedLogOutput" style="max-height: 280px;">Ожидание запуска...</pre>
+          </div>
+          <div>
+            <h3>Инциденты безопасности (Audit Alerts):</h3>
+            <pre class="terminal" id="auditStatsOutput" style="max-height: 280px; color: #f87171;">Ожидание...</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- МОДУЛЬ 5-6 -->
+    <div id="tab-mod3" class="tab-content">
+      <div class="card">
+        <h2>Складской учёт оборудования (SQLite + Атомарные транзакции) <button class="btn btn-outline" onclick="loadProducts()">Обновить</button></h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Артикул (SKU)</th>
+              <th>Наименование</th>
+              <th>Категория</th>
+              <th>Цена</th>
+              <th>Остаток (Stock)</th>
+              <th>Действие</th>
+            </tr>
+          </thead>
+          <tbody id="productsTableBody">
+            <tr><td colspan="7">Загрузка товаров...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h2>Транзакционное изменение остатков (BEGIN/COMMIT/ROLLBACK)</h2>
+          <label>ID товара:</label>
+          <input type="number" id="adjProductId" value="1">
+          <label>Изменение остатка (+ приход / - списание):</label>
+          <input type="number" id="adjAmount" value="-1">
+          <label>Причина операции:</label>
+          <input type="text" id="adjReason" value="Выдача в серверную стойку">
+          <button class="btn" onclick="submitStockAdjustment()">Провести транзакцию</button>
+          <div id="adjResultMsg" style="margin-top: 0.5rem; font-weight: 500;"></div>
+        </div>
+        <div class="card">
+          <h2>Журнал аудита движений (inventory_logs)</h2>
+          <pre class="terminal" id="inventoryLogsOutput">Загрузка журнала...</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- МОДУЛЬ 7-8 -->
+    <div id="tab-mod4" class="tab-content">
+      <div class="grid-2">
+        <div class="card">
+          <h2>Аутентификация JWT (Dual-Token + Ротация RTR)</h2>
+          <label>Имя пользователя:</label>
+          <input type="text" id="authUsername" value="BorisStasev">
+          <label>Роль в КИС:</label>
+          <select id="authRole">
+            <option value="ADMIN">ADMIN (Полный доступ)</option>
+            <option value="MANAGER">MANAGER (Управление складом)</option>
+            <option value="USER">USER (Базовый доступ)</option>
+          </select>
+          <button class="btn" onclick="login()">Войти в систему</button>
+          <button class="btn btn-outline" onclick="refreshToken()" style="margin-left: 0.5rem;">Ротация токенов (RTR)</button>
+          <pre class="terminal" id="jwtOutput" style="margin-top: 1rem;">Токены не получены</pre>
+        </div>
+        <div class="card">
+          <h2>Контроль доступа (RBAC & HMAC Sessions)</h2>
+          <button class="btn" onclick="checkAdminZone()">Проверить защищенную зону ADMIN</button>
+          <button class="btn btn-outline" onclick="checkSessionState()" style="margin-left: 0.5rem;">Проверить HMAC Session</button>
+          <pre class="terminal" id="rbacOutput" style="margin-top: 1rem;">Нажмите кнопку для проверки прав...</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- МОДУЛЬ 9-10 -->
+    <div id="tab-mod5" class="tab-content">
+      <div class="grid-2">
+        <div class="card">
+          <h2>RESTful API Статей (Zod, ETag, HATEOAS)</h2>
+          <label>Заголовок статьи (мин. 3 символа):</label>
+          <input type="text" id="artTitle" value="Корпоративные архитектурные паттерны">
+          <label>Содержимое (мин. 10 символов):</label>
+          <textarea id="artContent" rows="3">Подробное описание архитектуры микросервисов и монолитных КИС...</textarea>
+          <button class="btn" onclick="createArticle()">Создать статью через REST</button>
+          <pre class="terminal" id="restOutput" style="margin-top: 1rem;">Ожидание...</pre>
+        </div>
+
+        <div class="card">
+          <h2>WebSocket Real-Time Chat (Envelope, Rooms, No Duplicates)</h2>
+          <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+            <input type="text" id="wsUserInput" value="BorisUser" style="margin: 0; flex: 1;">
+            <button class="btn" onclick="wsConnect()">Подключиться</button>
+          </div>
+          <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+            <button class="btn btn-outline" onclick="wsJoin('general')"># general</button>
+            <button class="btn btn-outline" onclick="wsJoin('dev-team')"># dev-team</button>
+            <button class="btn btn-outline" onclick="wsJoin('security')"># security</button>
+          </div>
+          <div id="wsChatBox" class="chat-box"></div>
+          <div id="wsTypingBox" style="font-size: 0.8rem; color: var(--accent); height: 1.2rem; margin-top: 0.2rem;"></div>
+          <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+            <input type="text" id="wsMsgInput" placeholder="Введите сообщение..." style="margin: 0; flex: 1;" onkeydown="if(event.key==='Enter') wsSendMessage(); else wsSendTyping();">
+            <button class="btn" onclick="wsSendMessage()">Отправить</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/js/app.js?v=5"></script>
+</body>
+</html>

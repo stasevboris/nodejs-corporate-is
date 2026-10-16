@@ -1,0 +1,10 @@
+{
+  "name": "corporate-information-system-root",
+  "version": "1.0.0",
+  "description": "Единая корпоративная информационная система (10 тем: 5 модулей)",
+  "scripts": {
+    "start": "node app/src/server.js",
+    "test": "node --test app/test/*.test.js",
+    "sysops": "node app/bin/sysops.js"
+  }
+}

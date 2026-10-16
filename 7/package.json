@@ -1,0 +1,17 @@
+{
+  "name": "lab-07-secure-sessions-and-cookies",
+  "version": "1.0.0",
+  "description": "Лабораторная работа 7: Управление состоянием сеанса и обеспечение безопасности клиентских кук",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "keywords": ["session", "cookies", "hmac", "security", "httponly", "session-fixation"],
+  "author": "Stefan",
+  "license": "MIT"
+}

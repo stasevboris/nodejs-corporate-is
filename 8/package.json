@@ -1,0 +1,19 @@
+{
+  "name": "lab-08-auth-rbac-dual-token",
+  "version": "1.0.0",
+  "description": "Лабораторная работа 8: Проектирование систем аутентификации и разграничения прав доступа",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3"
+  },
+  "keywords": ["jwt", "authentication", "rbac", "abac", "refresh-token-rotation", "dms"],
+  "author": "Stefan",
+  "license": "MIT"
+}

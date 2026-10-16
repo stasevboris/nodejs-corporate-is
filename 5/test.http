@@ -1,0 +1,31 @@
+### 1. Health check
+GET http://localhost:3005/health
+
+### 2. Список тикетов с пагинацией и поиском
+GET http://localhost:3005/api/v1/tickets?page=1&limit=5&priority=critical
+
+### 3. Создание тикета
+POST http://localhost:3005/api/v1/tickets
+Content-Type: application/json
+
+{
+  "title": "Сбой авторизации LDAP",
+  "description": "Пользователи домена не могут войти",
+  "priority": "high",
+  "status": "open",
+  "tags": ["ldap", "auth", "security"]
+}
+
+### 4. Получение тикета по UUID
+GET http://localhost:3005/api/v1/tickets/a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d
+
+### 5. Ошибка невалидного UUID
+GET http://localhost:3005/api/v1/tickets/bad-uuid-123
+
+### 6. Обновление статуса PATCH
+PATCH http://localhost:3005/api/v1/tickets/a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d
+Content-Type: application/json
+
+{
+  "status": "closed"
+}

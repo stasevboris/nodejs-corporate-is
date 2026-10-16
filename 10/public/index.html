@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Лабораторная работа 10: WebSocket Real-Time Chat</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="sidebar">
+    <h2>Real-Time Hub</h2>
+    <p>Статус: <strong id="statusBadge" style="color: #f87171;">Offline</strong></p>
+    <div style="margin-bottom: 1rem;">
+      <label>Пользователь:</label>
+      <input type="text" id="usernameInput" value="StefanTester" style="width: 100%; box-sizing: border-box; margin-top: 0.3rem;">
+      <button id="connectBtn" style="width: 100%; margin-top: 0.5rem;">Подключиться</button>
+    </div>
+    <hr style="border-color: var(--border); width: 100%; margin: 1rem 0;">
+    <h3>Комнаты</h3>
+    <button onclick="joinRoom('general')" style="width: 100%; margin-bottom: 0.5rem;"># general</button>
+    <button onclick="joinRoom('dev-team')" style="width: 100%; margin-bottom: 0.5rem;"># dev-team</button>
+    <button onclick="joinRoom('security')" style="width: 100%;"># security</button>
+  </div>
+
+  <div class="main">
+    <div style="padding: 1rem 1.5rem; border-bottom: 1px solid var(--border);">
+      <h3 id="chatTitle" style="margin: 0;"># general</h3>
+    </div>
+    <div id="chatWindow" class="chat-window"></div>
+    <div id="typingIndicator" class="typing-indicator"></div>
+    <div class="input-bar">
+      <input type="text" id="messageInput" placeholder="Введите сообщение..." style="flex: 1;">
+      <button id="sendBtn">Отправить</button>
+    </div>
+    <div id="packetLog" class="packet-log">
+      <div style="color: #64748b;">--- Инспектор пакетов Envelope Pattern (RFC 6455) ---</div>
+    </div>
+  </div>
+
+  <script src="/client.js?v=2"></script>
+</body>
+</html>

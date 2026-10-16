@@ -1,0 +1,16 @@
+{
+  "name": "lab-02-cli-sysops",
+  "version": "1.0.0",
+  "description": "Лабораторная работа 2: Разработка CLI-утилит и автоматизация процессов в операционной системе",
+  "type": "module",
+  "bin": {
+    "sysops": "./bin/sysops.js"
+  },
+  "scripts": {
+    "start": "node bin/sysops.js --help",
+    "test": "node --test test/*.test.js"
+  },
+  "keywords": ["cli", "child_process", "parseArgs", "sysops", "automation"],
+  "author": "Stefan",
+  "license": "MIT"
+}

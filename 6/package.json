@@ -1,0 +1,16 @@
+{
+  "name": "lab-06-db-persistence-layer",
+  "version": "1.0.0",
+  "description": "Лабораторная работа 6: Интеграция базы данных и реализация персистентного слоя приложения",
+  "type": "module",
+  "main": "src/demo.js",
+  "scripts": {
+    "start": "node src/demo.js",
+    "migrate": "node -e \"import('./src/db/migrations.js').then(m => m.runMigrations());\"",
+    "seed": "node -e \"import('./src/db/seeds.js').then(s => s.runSeeds());\"",
+    "test": "node --test test/*.test.js"
+  },
+  "keywords": ["sqlite", "database", "repository", "transaction", "rollback", "persistence"],
+  "author": "Stefan",
+  "license": "MIT"
+}

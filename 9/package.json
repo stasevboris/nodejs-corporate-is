@@ -1,0 +1,18 @@
+{
+  "name": "lab-09-rest-architecture-validation",
+  "version": "1.0.0",
+  "description": "Лабораторная работа 9: Архитектурное построение и валидация REST-совместимых веб-служб",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "zod": "^3.24.2"
+  },
+  "keywords": ["rest", "rfc7807", "etag", "hateoas", "zod", "validation", "idempotency"],
+  "author": "Stefan",
+  "license": "MIT"
+}

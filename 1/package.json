@@ -1,0 +1,16 @@
+{
+  "name": "lab-01-node-modular-system",
+  "version": "1.0.0",
+  "description": "Лабораторная работа 1: Развертывание окружения и конфигурация модульной системы Node.js",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "info": "node src/system-info.js",
+    "start:cjs": "node -e \"const utils = require('./src/utils.cjs'); console.log(utils.formatUptime(process.uptime()));\"",
+    "test": "node --test test/*.test.js"
+  },
+  "keywords": ["esm", "commonjs", "environment", "system-info"],
+  "author": "Stefan",
+  "license": "MIT"
+}

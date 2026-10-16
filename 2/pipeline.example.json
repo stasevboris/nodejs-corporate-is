@@ -1,0 +1,20 @@
+{
+  "name": "BuildAndVerifyPipeline",
+  "tasks": [
+    {
+      "name": "CheckNodeVersion",
+      "command": "node -v",
+      "timeout": 3000
+    },
+    {
+      "name": "PrintDate",
+      "command": "date",
+      "timeout": 2000
+    },
+    {
+      "name": "EchoSuccess",
+      "command": "echo Pipeline stage completed successfully",
+      "timeout": 2000
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-10-15T11:21:58.909Z",
+  "summary": {
+    "totalProcessed": 300,
+    "alertsCount": 129,
+    "errorsCount": 15,
+    "sanitizedCount": 0,
+    "statusCodes": {
+      "200": 245,
+      "404": 40,
+      "500": 15
+    }
+  }
+}

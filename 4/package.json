@@ -1,0 +1,14 @@
+{
+  "name": "lab-04-native-http-server",
+  "version": "1.0.0",
+  "description": "Лабораторная работа 4: Низкоуровневое программирование HTTP-сервера средствами системных модулей",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test test/*.test.js"
+  },
+  "keywords": ["http", "native", "router", "static", "crud", "cors"],
+  "author": "Stefan",
+  "license": "MIT"
+}

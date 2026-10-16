@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Лабораторная работа 7: Безопасность сессий и cookie</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #f1f5f9; padding: 2rem; color: #1e293b; }
+    .card { background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; max-width: 650px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    button { background: #3b82f6; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; }
+    button.danger { background: #ef4444; }
+    input { padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; margin-right: 0.5rem; }
+    pre { background: #0f172a; color: #38bdf8; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <h1>Безопасность сеансов и клиентских Cookie (Лаба №7)</h1>
+
+  <div class="card">
+    <h2>Состояние текущей сессии</h2>
+    <button onclick="fetchSession()">Обновить статус сессии</button>
+    <pre id="sessionData">Загрузка...</pre>
+  </div>
+
+  <div class="card">
+    <h2>Аутентификация (Защита от Session Fixation)</h2>
+    <p>Демо аккаунт: <code>demo</code> / <code>secret123</code></p>
+    <input type="text" id="username" placeholder="Логин" value="demo">
+    <input type="password" id="password" placeholder="Пароль" value="secret123">
+    <button onclick="login()">Войти</button>
+    <button class="danger" onclick="logout()">Выйти</button>
+  </div>
+
+  <div class="card">
+    <h2>Тест безопасности HttpOnly</h2>
+    <p>Cookie с атрибутом <code>HttpOnly</code> защищены от кражи через XSS.</p>
+    <button onclick="testJsCookie()">Попробовать прочесть cookie через JS</button>
+    <p id="jsCookieResult" style="font-weight: bold; margin-top: 0.5rem;"></p>
+    <p><a href="/demo/xss-check" target="_blank">Открыть страницу XSS-проверки</a></p>
+  </div>
+
+  <script>
+    async function fetchSession() {
+      const res = await fetch('/api/session');
+      const data = await res.json();
+      document.getElementById('sessionData').innerText = JSON.stringify(data, null, 2);
+    }
+
+    async function login() {
+      const u = document.getElementById('username').value;
+      const p = document.getElementById('password').value;
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: u, password: p })
+      });
+      const data = await res.json();
+      alert(data.message || data.error);
+      fetchSession();
+    }
+
+    async function logout() {
+      await fetch('/api/auth/logout', { method: 'POST' });
+      fetchSession();
+    }
+
+    function testJsCookie() {
+      const c = document.cookie;
+      document.getElementById('jsCookieResult').innerText = c ? 'Прочитано: ' + c : 'Защита сработала: document.cookie пуст! HttpOnly блокирует доступ к сессионной cookie.';
+    }
+
+    fetchSession();
+  </script>
+</body>
+</html>

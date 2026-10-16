@@ -1,0 +1,32 @@
+### 1. Получить список всех задач
+GET http://localhost:3004/api/tasks
+
+### 2. Фильтрация по статусу
+GET http://localhost:3004/api/tasks?status=pending
+
+### 3. Создать задачу
+POST http://localhost:3004/api/tasks
+Content-Type: application/json
+
+{
+  "title": "Тестовая задача через REST Client",
+  "priority": "high",
+  "status": "pending"
+}
+
+### 4. Получить задачу по ID
+GET http://localhost:3004/api/tasks/1
+
+### 5. Частичное обновление PATCH
+PATCH http://localhost:3004/api/tasks/1
+Content-Type: application/json
+
+{
+  "status": "done"
+}
+
+### 6. Удалить задачу DELETE
+DELETE http://localhost:3004/api/tasks/1
+
+### 7. CORS preflight
+OPTIONS http://localhost:3004/api/tasks

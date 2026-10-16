@@ -1,0 +1,17 @@
+{
+  "name": "lab-05-express-middleware-pipeline",
+  "version": "1.0.0",
+  "description": "Лабораторная работа 5: Диспетчеризация сетевых запросов и конвейеризация данных в Express",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "keywords": ["express", "middleware", "pipeline", "router.param", "tickets", "rest"],
+  "author": "Stefan",
+  "license": "MIT"
+}

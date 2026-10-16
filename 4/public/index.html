@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Управление задачами - Native Node.js Server</title>
+  <link rel="stylesheet" href="/public/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Низкоуровневый HTTP-сервер (Лаба №4)</h1>
+    <p class="subtitle">Работает исключительно на модулях <code>node:http</code>, <code>node:fs</code>, <code>node:url</code> без внешних зависимостей.</p>
+
+    <div class="card">
+      <h2>Создать новую задачу</h2>
+      <div class="form-row">
+        <input type="text" id="taskTitle" placeholder="Название задачи..." style="flex: 1;">
+        <select id="taskPriority">
+          <option value="low">Низкий</option>
+          <option value="medium" selected>Средний</option>
+          <option value="high">Высокий</option>
+        </select>
+        <button id="addBtn">Добавить</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="list-header">
+        <h2>Список задач</h2>
+        <button id="refreshBtn">Обновить</button>
+      </div>
+      <div id="tasksList" class="tasks-container">Загрузка...</div>
+    </div>
+  </div>
+
+  <script>
+    async function loadTasks() {
+      const res = await fetch('/api/tasks');
+      const data = await res.json();
+      const list = document.getElementById('tasksList');
+      list.innerHTML = '';
+      if (!data.items || data.items.length === 0) {
+        list.innerHTML = '<p>Задач нет.</p>';
+        return;
+      }
+      data.items.forEach(t => {
+        const div = document.createElement('div');
+        div.className = 'task-item';
+        div.innerHTML = `
+          <div>
+            <strong>#${t.id}: ${t.title}</strong>
+            <span class="badge ${t.status}">${t.status}</span>
+            <span class="badge priority-${t.priority}">${t.priority}</span>
+          </div>
+          <div>
+            <button onclick="toggleStatus(${t.id}, '${t.status}')">Сменить статус</button>
+            <button onclick="deleteTask(${t.id})" class="btn-danger">Удалить</button>
+          </div>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    async function addTask() {
+      const title = document.getElementById('taskTitle').value;
+      const priority = document.getElementById('taskPriority').value;
+      if (!title) return alert('Введите название!');
+      await fetch('/api/tasks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, priority, status: 'pending' })
+      });
+      document.getElementById('taskTitle').value = '';
+      loadTasks();
+    }
+
+    async function toggleStatus(id, currentStatus) {
+      const nextStatus = currentStatus === 'done' ? 'pending' : 'done';
+      await fetch('/api/tasks/' + id, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: nextStatus })
+      });
+      loadTasks();
+    }
+
+    async function deleteTask(id) {
+      await fetch('/api/tasks/' + id, { method: 'DELETE' });
+      loadTasks();
+    }
+
+    document.getElementById('addBtn').addEventListener('click', addTask);
+    document.getElementById('refreshBtn').addEventListener('click', loadTasks);
+    loadTasks();
+  </script>
+</body>
+</html>

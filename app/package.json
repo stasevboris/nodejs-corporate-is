@@ -1,0 +1,37 @@
+{
+  "name": "enterprise-information-system",
+  "version": "1.0.0",
+  "description": "Единая корпоративная информационная система (10 тем: 5 модулей)",
+  "type": "module",
+  "main": "src/server.js",
+  "bin": {
+    "sysops": "./bin/sysops.js"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test test/*.test.js",
+    "sysops": "node bin/sysops.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "ws": "^8.18.0",
+    "zod": "^3.23.8"
+  },
+  "keywords": [
+    "enterprise",
+    "esm-cjs",
+    "cli",
+    "streams",
+    "http",
+    "express",
+    "sqlite",
+    "sessions",
+    "jwt-rtr",
+    "rest",
+    "websocket"
+  ],
+  "author": "Стасев Б.В.",
+  "license": "MIT"
+}
